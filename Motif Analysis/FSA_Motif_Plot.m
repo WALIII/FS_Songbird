@@ -1,3 +1,7 @@
+function FSA_Motif_Plot(roi_ave)
+
+% Plots songs, depending on the extraction order (roughly, motif order of when the were
+% extracted)
 
 
 
@@ -7,7 +11,7 @@ trialno = {'0001','0002','0003'}
 colores = {'r','g','b'}
 
 
-cell2 = [1 2 3 4 6 7 8 9 10 12 16 17 20 24 27 29 30 34 41]
+cell2 = 1:40;
 
  counter2 = 1;
  clear HoldingV;
@@ -17,7 +21,7 @@ cell2 = [1 2 3 4 6 7 8 9 10 12 16 17 20 24 27 29 30 34 41]
   counter2 = 1;
   HoldingV = [];
   
-for trial = 1:300
+for trial = 1:size(roi_ave.filename,2)
    clear Y; 
 S = roi_ave.filename{1,trial};
 Y = S(end-7:end-4);
