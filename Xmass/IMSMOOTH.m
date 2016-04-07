@@ -32,7 +32,7 @@ for i = 1:5
 test = tiledImage(:,:,i);
 test=imresize(double(test),1);
 
-h=fspecial('disk',50);
+h=fspecial('disk',80);
 bground=imfilter(test,h);
 % bground=smooth3(bground,[1 1 5]);
 test=test./(bground+10);
@@ -69,8 +69,8 @@ EV = E1(Linind);
 LinKat = cat(1,AV,BV,CV,DV,EV); % concat each indexed pixel value
 
 
-H = prctile(LinKat,97);
-L = prctile(LinKat,70 );
+H = prctile(LinKat,100);
+L = prctile(LinKat,40);
 
 clim=[ double(L) double(H)];
 

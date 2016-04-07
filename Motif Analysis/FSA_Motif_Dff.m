@@ -5,7 +5,7 @@ function [M_Im_Agg] =  FSA_Motif_Dff
 trialno = {'0001','0002','0003'};
 
         gifListing = dir(fullfile(pwd,'*tif'));
-        gifListing = {gifListing(48:48*2).name};
+        gifListing = {gifListing(:).name};
        for ii = 1:length(gifListing);
          Y{ii} = gifListing{ii}(end-11:end-8);
        end
