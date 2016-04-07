@@ -1,15 +1,13 @@
-function [M_Im_Agg] =  FSA_Motif_Dff;
+function [M_Im_Agg] =  FSA_Motif_Dff
 
 
 
 trialno = {'0001','0002','0003'};
 
         gifListing = dir(fullfile(pwd,'*tif'));
-        gifListing = {gifListing(:).name};
+        gifListing = {gifListing(48:48*2).name};
        for ii = 1:length(gifListing);
          Y{ii} = gifListing{ii}(end-11:end-8);
-
-
        end
 
        disp('Extracting good gif trials');
@@ -21,6 +19,7 @@ for c = 1:3
          counter = 1;
 for trial = 1:length(gifListing);
 
+    
        if Y{trial} == triaL;
            Imdat = imread(gifListing{trial});
            ImAgg(:,:,counter) = Imdat;
