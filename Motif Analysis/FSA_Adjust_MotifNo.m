@@ -8,7 +8,7 @@ counter2 = 1; % for new data
     for ii = 1:size(sorted_syllable{i},1)
         place = [1:size(sorted_syllable{i},1)];
 
-if sorted_syllable{i}(ii) < (250*24400)/48000;
+if sorted_syllable{i}(ii) < (220*24400)/48000;
     Old_FileName{counter3} = [];
     New_FileName{counter3} = strcat(FN,'_000',num2str(counter2));
     counter2 = counter2+1;
