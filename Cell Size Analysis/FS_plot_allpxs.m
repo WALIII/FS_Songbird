@@ -1,12 +1,11 @@
 function FS_plot_allpxs(MOV_DATA,varargin)
 %fb_plot_allpxs uses the center of mass (df/f here) (COM) across time to define
 
-%
-if size(MOV_DATA,3) == 3;
-	for i = 1:size(MOV_DATA,4)
-		mov_data(:,:,i) = double(rgb2gray(MOV_DATA(:,:,:,i)));
+%if size(MOV_DATA,3) == 3;
+	for i = 1:size(MOV_DATA,2)
+		mov_data(:,:,i) = (MOV_DATA(i).cdata(:,:,:,:));
 	end
-end
+
 
 	clear MOV_DATA;
 
@@ -179,7 +178,7 @@ set(gca,'color',bgcolor,'tickdir','out');
 set(gcf,'renderer','opengl','InvertHardCopy','off');
 
 figure();
-image(im1_rgb); 
+image(im1_rgb);
 colormap(cmap);freezeColors;
 
 % create sonogram image with legend
