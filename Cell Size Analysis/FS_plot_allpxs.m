@@ -5,9 +5,12 @@ function [im1_rgb norm_max_proj] = FS_plot_allpxs(MOV_DATA,varargin)
 % for i = 1:size(MOV_DATA,2)
 % 		mov_data(:,:,i) = double(rgb2gray(MOV_DATA(i).cdata(:,:,:,:)));
 % end
-
+try
 for i = 1:size(MOV_DATA,2)
 		mov_data(:,:,i) = double((MOV_DATA(i).cdata(:,:,:,:)));
+end
+catch
+    mov_data = MOV_DATA;
 end
 
 	clear MOV_DATA;
@@ -120,9 +123,9 @@ im1_rgb=ind2rgb(idx_img,cmap);
 
 
 % Single Use Plotting
- % imwrite(im1_rgb,'Filename.png','Alpha',norm_max_proj);
- % I = imread('Filename.png', 'BackgroundColor',[0 0 0]);
- % imwrite(I, 'NewFilename.jpg')
+ imwrite(im1_rgb,'Filename.png','Alpha',norm_max_proj);
+ I = imread('Filename.png', 'BackgroundColor',[0 0 0]);
+ imwrite(I, 'NewFilename.jpg')
 
 
 % PLOTTING:
