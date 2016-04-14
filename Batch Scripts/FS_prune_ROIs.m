@@ -8,7 +8,7 @@ function FS_prune_ROIs(ROI_dat)
 % Root is where the script is run...
 START_DIR_ROOT = pwd;
 
-myfile = '/template/template_data.mat';
+%myfile = '/template/template_data.mat';
 [parentdir,~,~]=fileparts(START_DIR_ROOT);
 
 % Get a list of all files and folders in this folder.
