@@ -1,4 +1,4 @@
-function FSA_MakeAvgDffMov()
+function AVG_MOV = FSA_MakeAvgDffMov()
 % Make average Dff movie
 
 
@@ -12,18 +12,20 @@ for  iii = 1:length(mov_listing)
     [path,file,ext]=fileparts(filenames{iii});
 
   load(fullfile(pwd,mov_listing{iii}),'mov_data_aligned');
+DispWrd = strcat('moving to: ', file);
+disp(DispWrd);
 
 
   mov_data = mov_data_aligned;
 
   for i=1:(length(mov_data)-2)
-     mov_data3 = single(rgb2gray(mov_data(i).cdata));
-     mov_data4 = single(rgb2gray(mov_data(i+1).cdata));
+     mov_data3 = mov_data(i).cdata;
+     mov_data4 = mov_data(i+1).cdata;
      %mov_data5 = single(rgb2gray(mov_data(i+2).cdata));
-     mov_data2(:,:,i) = uint8((mov_data3 + mov_data4)/2);
+     mov_data2(:,:,i) = (mov_data3 + mov_data4)/2;
   end
 
-mov_data2 = =imresize((mov_data2),.25);
+mov_data2 = imresize((mov_data2),.25);
 
 AggMov_data(:,:,:,iii) = mov_data2(:,:,1:50);
 
@@ -32,6 +34,6 @@ end
 
 
 
-AVG_MOV = mean(AggMov_data(:,:,:,iii),4)
+AVG_MOV = mean(AggMov_data(:,:,:,iii),4);
 
 end
