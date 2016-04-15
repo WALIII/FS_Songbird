@@ -1,4 +1,4 @@
-function AVG_MOV = FSA_MakeAvgDffMov()
+function AVG_MOV = FSA_MakeAvgDffMov();
 % Make average Dff movie
 
 
@@ -56,6 +56,7 @@ dff2 = imresize(dff,1);% Scale Data
 
 I = find(diff(vid_times) > .04);
 if size(I,1)<1
+     
 AggMov_data(:,:,:,counter) = dff2(:,:,1:50);
 
 counter = counter+1;
