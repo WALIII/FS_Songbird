@@ -17,7 +17,7 @@ end
 % Display image
 for i = 1:3
     H = prctile(max(AVG_DAT_Aligned{i}(:,:,10)),85);
-    L = prctile(mean(AVG_DAT_Aligned{i}(:,:,10)),40);
+    L = prctile(mean(AVG_DAT_Aligned{i}(:,:,10)),30);
     
     clim = [double(L) double(H)];
     

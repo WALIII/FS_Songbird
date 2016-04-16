@@ -7,7 +7,7 @@ function FSA_AvgMov_Allpix(MOV_DATA)
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
 
-MOV_DATA = double(MOV_DATA(:,:,20:40));
+MOV_DATA = double(MOV_DATA(:,:,10:40));
 
 
 [rows,columns,frames]=size(MOV_DATA);
@@ -25,7 +25,7 @@ end
 com_idx=repmat(com_idx,[rows columns 1]);
 
 mass=sum(dff,3);
-com_dff=sum((dff.*com_idx),3)./mass+10;
+com_dff=sum((dff.*com_idx),3)./mass;
 
 max_proj=std(dff,[],3);
 

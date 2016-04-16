@@ -26,11 +26,12 @@ for  iii = 1:size(filenames,2)
 fName = strcat(filenames{iii},'.mat');
     
     
-
+try
   load(fullfile(pwd,fName),'mov_data_aligned','vid_times');
 DispWrd = strcat('moving to: ',fName);
 disp(DispWrd);
 
+        
 % Extract video data:
 mov_data = mov_data_aligned;
 
@@ -56,7 +57,7 @@ disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline
 
 baseline=repmat(prctile(test,per,3),[1 1 frames]);
 
-dff=((test-baseline)./(baseline+20)).*100;
+dff=((test-baseline)./(baseline)).*100;
 
 %
 dff2 = imresize(dff,1);% Scale Data
@@ -80,6 +81,11 @@ counter3 = counter3+1;
 end
 
 clear mov_data; clear mov_data2; clear mov_data3; clear mov_data4; clear vid_times; clear I;
+
+catch
+    disp('could not find file...')    
+    continue
+end
 end
 
 
