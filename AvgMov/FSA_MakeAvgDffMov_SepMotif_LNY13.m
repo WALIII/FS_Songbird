@@ -28,85 +28,91 @@ fName = filenames{iii};
     
     
 try
-  load(fullfile(pwd,fName),'mov_data','mov_data_aligned','vid_times');
+  load(fullfile(pwd,fName),'mov_data','vid_times');
 DispWrd = strcat('moving to: ',fName);
 disp(DispWrd);
 catch
-DispWrd = strcat('WARNING:  Could not find: ',fName);
+DispWrd = strcat('WARNING; Could not find: ',fName);
 disp(DispWrd);
  continue
 end
         
 % Extract video data:
-TERM_LOOP = 0;
-
-for ui = 1:size(mov_data_aligned,2); % Check for bad frames
-    if mean(mean(mov_data_aligned(ui).cdata(:,:)))< 50;
-        dispword = strcat(' WARNING:  Bad frame(s) detected on frame: ',ui);
-        disp(dispword);
-        TERM_LOOP = 1;
-        break
-    end
-end
-
-if TERM_LOOP ==1;
-    disp(' skipping to nex mov file...')
-    continue
-end
+mov_data = mov_data;
 
 
 % Reformat Movie data:
 for i=1:(length(mov_data)-2)
-   
    mov_data3 = single(rgb2gray(mov_data(i).cdata));
    mov_data4 = single(rgb2gray(mov_data(i+1).cdata));
    %mov_data5 = single(rgb2gray(mov_data(i+2).cdata));
    mov_data2(:,:,i) = uint8((mov_data3 + mov_data4)/2);
-
 end
 
   
-  test = single(mov_data2);
+  test = (mov_data2);
 [rows,columns,frames]=size(test);
   
+
+test=imresize((test),.25);
+
+h=fspecial('disk',50);
+bground=imfilter(test,h);
+% bground=smooth3(bground,[1 1 5]);
+test=test-bground;
+h=fspecial('disk',1);
+test2=imfilter(test,h);
+
+% Scale videos by pixel value intensities
+LinKat =  cat(1,test2(:,1,10));
+for i = 2:size(test2,2)
+Lin = cat(1,test2(:,i,size(test2,3)));
+LinKat = cat(1,LinKat,Lin);
+end
+H = prctile(LinKat,95)+20; % clip pixel value equal to the 95th percentile value
+L = prctile(LinKat,20);% clip the pixel value equal to the bottem 20th percentile value
+%%%%%
+
 %%%=============[ FILTER Data ]==============%%%
 
-disp('Gaussian filtering the movie data...');
-
-h=fspecial('gaussian',filt_rad,filt_alpha);
-test=imfilter(test,h,'circular');
-
-disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline...']);
-
-baseline=repmat(prctile(test,per,3),[1 1 frames]);
-
-dff=((test-baseline)./(baseline+10)).*100;
+% disp('Gaussian filtering the movie data...');
+% 
+% h=fspecial('gaussian',filt_rad,filt_alpha);
+% test=imfilter(test,h,'circular');
+% 
+% disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline...']);
+% 
+% baseline=repmat(prctile(test,per,3),[1 1 frames]);
+% baseline = baseline./100;
+% 
+% dff=((test-baseline)./(abs(baseline)).*100;
 
 %
-dff2 = imresize(dff,1);% Scale Data
+clim = [double(L) double(H)];
+    
+dff = mat2gray(test2, clim);
+
+
+dff2 = imresize(dff,4);% Scale Data
+
+ figure(1); for i = 1:40; IM(:,:,:) = dff(:,:,i); imagesc(IM);  pause(0.050); end;
 
 I = find(diff(vid_times) > .04);
 if size(I,1)<1
 
-try
 Y = char(realFilenames{iii});
 Y = Y(end-3:end);
-catch
-    disp('Warning- too much song?')
-    continue
-end
-
 
  trialno = {'0001', '0002', '0003'};
     if Y == trialno{1};
-AggMov_data_01(:,:,:,counter) = dff2(:,:,1:45);
+AggMov_data_01(:,:,:,counter) = dff2(:,:,1:40);
 counter = counter+1;
     elseif Y == trialno{2};
-AggMov_data_02(:,:,:,counter2) = dff2(:,:,1:45);
+AggMov_data_02(:,:,:,counter2) = dff2(:,:,1:40);
 counter2 = counter2+1;
 
     elseif Y == trialno{3};
-AggMov_data_03(:,:,:,counter3) = dff2(:,:,1:45);
+AggMov_data_03(:,:,:,counter3) = dff2(:,:,1:40);
 counter3 = counter3+1;
 
     else
@@ -122,6 +128,7 @@ end
 
 try
 AVG_MOV{1} = mean(AggMov_data_01(:,:,:,:),4);
+
 catch
     disp('No Movies with 0001')
     AVG_MOV{1} = [];
