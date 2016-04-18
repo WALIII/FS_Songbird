@@ -41,7 +41,7 @@ end
 TERM_LOOP = 0;
 
 for ui = 1:size(mov_data_aligned,2); % Check for bad frames
-    if mean(mean(mov_data_aligned(ui).cdata(:,:)))< 50;
+    if mean(mean(mov_data_aligned(ui).cdata(:,:)))< 20;
         dispword = strcat(' WARNING:  Bad frame(s) detected on frame: ',ui);
         disp(dispword);
         TERM_LOOP = 1;
@@ -80,7 +80,7 @@ disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline
 
 baseline=repmat(prctile(test,per,3),[1 1 frames]);
 
-dff=((test-baseline)./(baseline+10)).*100;
+dff=((test-baseline)./(baseline+20)).*100;
 
 %
 dff2 = imresize(dff,1);% Scale Data
