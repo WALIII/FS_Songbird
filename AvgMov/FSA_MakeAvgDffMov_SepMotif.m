@@ -79,9 +79,9 @@ test=imfilter(test,h,'circular');
 disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline...']);
 
 baseline=repmat(prctile(test,per,3),[1 1 frames]);
-
+tot = (test-baseline);
 dff=((test-baseline)./(baseline+20)).*100;
-
+dff(baseline<50) = tot(baseline<50);
 %
 dff2 = imresize(dff,1);% Scale Data
 
