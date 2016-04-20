@@ -11,7 +11,7 @@ for i = 1:3
 %     AVG_DAT{i} = AVG_DAT{i}-bground;
     % Adjust Clims:
     try
-    H = prctile(max(AVG_DAT{i}(:,:,10)),80);
+    H = prctile(max(AVG_DAT{i}(:,:,10)),90);
     L = prctile(mean(AVG_DAT{i}(:,:,10)),20);
     
     clim = [double(L) double(H)];
