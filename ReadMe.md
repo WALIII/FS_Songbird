@@ -45,7 +45,7 @@ eventually, you will cluster the data.
 Change Directories to >mat--> extraction--> mov
 
 
-## MAX/STD PROJECTIONS
+### MAX/STD PROJECTIONS
 you can run FS_Dff.m again ( as in step 3) or, to just make max and std projections,
 
 ```
@@ -54,7 +54,11 @@ you can run FS_Dff.m again ( as in step 3) or, to just make max and std projecti
 
 ### Allpix projections
 
+Sometimes it is useful to color max projection images by the time of firing. This representation uses the center of mass of each pixel in time, to determine its color.
+
 ![ScreenShot](IM/All_pix.jpg)
+figure: Example allpix image. 
+
 
 ### Average video
 
