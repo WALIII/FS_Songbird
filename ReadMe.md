@@ -57,7 +57,8 @@ you can run FS_Dff.m again ( as in step 3) or, to just make max and std projecti
 Sometimes it is useful to color max projection images by the time of firing. This representation uses the center of mass of each pixel in time, to determine its color.
 
 ![ScreenShot](IM/All_pix.jpg)
-figure: Example allpix image. 
+
+figure: Example allpix image.
 
 
 ### Average video
