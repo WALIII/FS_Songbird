@@ -41,7 +41,7 @@ end
 TERM_LOOP = 0;
 
 for ui = 1:size(mov_data_aligned,2); % Check for bad frames
-    if mean(mean(mov_data_aligned(ui).cdata(:,:)))< 20;
+    if mean(mean(mov_data_aligned(ui).cdata(:,:)))< 60;
         dispword = strcat(' WARNING:  Bad frame(s) detected on frame: ',ui);
         disp(dispword);
         TERM_LOOP = 1;
@@ -78,12 +78,25 @@ test=imfilter(test,h,'circular');
 
 disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline...']);
 
+
 baseline=repmat(prctile(test,per,3),[1 1 frames]);
+
+h=fspecial('gaussian',10,30);
+baseline = imfilter(baseline,h,'circular'); % filter baseline
+
 tot = (test-baseline);
-dff=((test-baseline)./(baseline+20)).*100;
-dff(baseline<50) = tot(baseline<50);
-%
+dff=(tot./(baseline)).*100;
+
 dff2 = imresize(dff,1);% Scale Data
+%baseline(baseline<0)=1;
+
+
+% baseline=repmat(prctile(test,per,3),[1 1 frames]);
+% tot = (test-baseline);
+% dff=((test-baseline)./(baseline+20)).*100;
+% % dff(baseline<50) = tot(baseline<50);
+%
+
 
 I = find(diff(vid_times) > .04);
 if size(I,1)<1
@@ -97,15 +110,15 @@ catch
 end
 
 
- trialno = {'0001', '0002', '0003'};
+ trialno = {'0001', '0002', '0003', '0004', '0005'};
     if Y == trialno{1};
 AggMov_data_01(:,:,:,counter) = dff2(:,:,1:45);
 counter = counter+1;
-    elseif Y == trialno{2};
+    elseif Y == trialno{2} | Y == trialno{3} | Y == trialno{4};
 AggMov_data_02(:,:,:,counter2) = dff2(:,:,1:45);
 counter2 = counter2+1;
 
-    elseif Y == trialno{3};
+    elseif Y == trialno{5};
 AggMov_data_03(:,:,:,counter3) = dff2(:,:,1:45);
 counter3 = counter3+1;
 
