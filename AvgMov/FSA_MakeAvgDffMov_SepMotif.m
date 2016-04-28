@@ -33,7 +33,7 @@ DispWrd = strcat('moving to: ',fName);
 disp(DispWrd);
 catch
 DispWrd = strcat('WARNING:  Could not find: ',fName);
-disp(DispWrd);
+warning(DispWrd);
  continue
 end
         
@@ -41,9 +41,9 @@ end
 TERM_LOOP = 0;
 
 for ui = 1:size(mov_data_aligned,2); % Check for bad frames
-    if mean(mean(mov_data_aligned(ui).cdata(:,:)))< 60;
-        dispword = strcat(' WARNING:  Bad frame(s) detected on frame: ',ui);
-        disp(dispword);
+    if mean(mean(mov_data_aligned(ui).cdata(:,:)))< 40;
+        dispword = strcat(' WARNING:  Bad frame(s) detected on frame: ',num2str(ui));
+        warning(dispword);
         TERM_LOOP = 1;
         break
     end
@@ -74,28 +74,21 @@ end
 disp('Gaussian filtering the movie data...');
 
 h=fspecial('gaussian',filt_rad,filt_alpha);
-test=imfilter(test,h,'circular');
+test=imfilter(test,h,'circular','replicate');
 
 disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline...']);
 
 
 baseline=repmat(prctile(test,per,3),[1 1 frames]);
 
-h=fspecial('gaussian',10,30);
-baseline = imfilter(baseline,h,'circular'); % filter baseline
+% h=fspecial('gaussian',30,10);
+% baseline = imfilter(baseline,h,'circular'); % filter baseline
 
-tot = (test-baseline);
-dff=(tot./(baseline)).*100;
+
+dff = (test.^2-baseline.^2)./baseline;
 
 dff2 = imresize(dff,1);% Scale Data
-%baseline(baseline<0)=1;
 
-
-% baseline=repmat(prctile(test,per,3),[1 1 frames]);
-% tot = (test-baseline);
-% dff=((test-baseline)./(baseline+20)).*100;
-% % dff(baseline<50) = tot(baseline<50);
-%
 
 
 I = find(diff(vid_times) > .04);
@@ -110,20 +103,19 @@ catch
 end
 
 
- trialno = {'0001', '0002', '0003', '0004', '0005'};
+ trialno = {'0001', '0002', '0003'};
     if Y == trialno{1};
 AggMov_data_01(:,:,:,counter) = dff2(:,:,1:45);
 counter = counter+1;
-    elseif Y == trialno{2} | Y == trialno{3} | Y == trialno{4};
+    elseif Y == trialno{2};
 AggMov_data_02(:,:,:,counter2) = dff2(:,:,1:45);
 counter2 = counter2+1;
 
-    elseif Y == trialno{5};
+    elseif Y == trialno{3};
 AggMov_data_03(:,:,:,counter3) = dff2(:,:,1:45);
 counter3 = counter3+1;
-
     else
-        disp('WARNING does not sort')
+       disp('WARNING does not sort')
     end
 end
 
@@ -148,7 +140,7 @@ catch
 end
 
 try
-AVG_MOV{3} = mean(AggMov_data_03(:,:,:,:),4);
+AVG_MOV{3} = median(AggMov_data_03(:,:,:,:),4);
 catch
     disp('No Movies with 0003')
     AVG_MOV{3} = [];
