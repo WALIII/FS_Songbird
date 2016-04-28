@@ -49,10 +49,11 @@ disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline
 
 baseline=repmat(prctile(test,per,3),[1 1 frames]);
 
-dff=((test-baseline)./(baseline+20)).*100;
+dff = (test.^2-baseline.^2)./baseline;
 
-%
 dff2 = imresize(dff,1);% Scale Data
+
+
 
 I = find(diff(vid_times) > .04);
 if size(I,1)<1
@@ -67,6 +68,6 @@ end
 
 
 
-AVG_MOV = mean(AggMov_data(:,:,:,2:50),4);
+AVG_MOV = mean(AggMov_data,4);
 
 end
