@@ -207,7 +207,7 @@ end
 Cell_Stability(cell) = abs(mean(offset));
 end
 
-cutoff = 0.02
+cutoff = 0.1
 clear U; clear S;
 U = find(Cell_Stability > cutoff);
 S = find(Cell_Stability < cutoff);
