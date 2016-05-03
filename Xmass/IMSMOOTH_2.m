@@ -4,10 +4,10 @@ function IMSMOOTH(im_data,ROI)
 
 
 %IM_data = A{images};
-
-
+data = im_data;
+A = im_data{1};
 KittyCat = cat(1,ROI.coordinates{:}); % concatonate ROI locations
-Linind = sub2ind(size(A),KittyCat(:,2),KittyCat(:,1)); % make index from ROI locations
+Linind = sub2ind(size(im_data{1}),KittyCat(:,2),KittyCat(:,1)); % make index from ROI locations
 cmap = gray;
 %% Step Three, Take pixel value data from the index locations, from each image
 [optimizer, metric] = imregconfig('multimodal')
@@ -32,7 +32,7 @@ for i = 1:size(im_data,2)
 test = tiledImage(:,:,i);
 test=imresize(double(test),1);
 
-h=fspecial('disk',80);
+h=fspecial('disk',70);
 bground=imfilter(test,h);
 % bground=smooth3(bground,[1 1 5]);
 test=test./(bground+10);
@@ -54,7 +54,7 @@ ToTdata(:,:,1) = ToTdata3(:,:,1);
  end
 
  for f = 1:size(im_data,2)
-A1 = ToTdata(:,:,1);
+A1 = ToTdata(:,:,f);
 AV{f} = A1(Linind);
 clear A1
  end
@@ -70,11 +70,11 @@ clear A1
 % DV = D1(Linind);
 % EV = E1(Linind);
 
-LinKat = cat(1,AV{1},AV{2},AV{3},AV{4},AV{5}); % concat each indexed pixel value
+LinKat = cat(1,AV{1},AV{2},AV{3}); % concat each indexed pixel value
 
 
-H = prctile(LinKat,100);
-L = prctile(LinKat,40);
+H = prctile(LinKat,90);
+L = prctile(LinKat,20);
 
 clim=[ double(L) double(H)];
 
@@ -88,7 +88,7 @@ end
 
 
 %Convert I to indices into the colormap,
-for iii = 1:size(im_data,2)-2;
+for iii = 1:size(im_data,2);
 
 D123(:,:,iii) = IndI(:,:,iii);
 if size(im_data,2)>3;
