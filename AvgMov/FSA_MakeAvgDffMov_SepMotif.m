@@ -3,8 +3,8 @@ function AVG_MOV = FSA_MakeAvgDffMov_SepMotif(AF);
 
 
 
-filt_rad=20; % gauss filter radius
-filt_alpha=30; % gauss filter alpha
+filt_rad=10; % gauss filter radius **20
+filt_alpha=30; % gauss filter alpha **30
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
 per=0; % baseline percentile (0 for min)

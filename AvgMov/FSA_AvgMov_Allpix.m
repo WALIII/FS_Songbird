@@ -7,7 +7,7 @@ function FSA_AvgMov_Allpix(MOV_DATA)
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
 
-MOV_DATA = double(MOV_DATA(:,:,15:40));
+MOV_DATA = double(MOV_DATA(:,:,7:35)); % MOV_DATA(:,:,15:35))
 
 
 [rows,columns,frames]=size(MOV_DATA);
@@ -60,4 +60,5 @@ im1_rgb=ind2rgb(idx_img,cmap);
 % Single Use Plotting
  imwrite(im1_rgb,'Filename.png','Alpha',norm_max_proj);
  I = imread('Filename.png', 'BackgroundColor',[0 0 0]);
+ figure(); imshow(I);
  imwrite(I, 'NewFilename.jpg')
