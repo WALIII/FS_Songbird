@@ -1,14 +1,10 @@
 function [dff] = FSA_Subtract_Background(mov_data,filt_rad,filt_alpha,scale);
-
+% Subtract Background from FreedomScope Movies
 
 
 
 % Reformat Movie data:
-for i=1:(length(mov_data)-2)
-   mov_data3 = single(rgb2gray(mov_data(i).cdata));
-   mov_data4 = single(rgb2gray(mov_data(i+1).cdata));
-   mov_data2(:,:,i) = uint8((mov_data3 + mov_data4)/2);
-end
+mov_data2 = FSA_Format_Mov(mov_data, 1)
 
     test = single(mov_data2);
   [rows,columns,frames]=size(test);
