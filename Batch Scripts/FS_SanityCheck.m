@@ -1,5 +1,5 @@
 
-close all
+
 
 
 
@@ -9,10 +9,10 @@ figure();
  clear G_c;
  clear G_uc;
  clear G;
- pdata = roi_ave;
+ pdata = roi_ave_1;
  counter = 1;
  for cell = 1:size(pdata.raw_dat,1);
- for i = 1:100%size(pdata.raw_dat,2); %[8 9 10 11 12 17 18 20 21 22]
+ for i = 1:20%size(pdata.raw_dat,2); %[8 9 10 11 12 17 18 20 21 22]
      if min(pdata.raw_dat{cell,i}(2:end))>30;
     plot(pdata.raw_time{cell,i}(2:end),zscore(pdata.raw_dat{cell,i}(2:end))+cell*6,'b'); 
      end

@@ -1,4 +1,4 @@
-function FSA_Motif_Plot(roi_ave)
+function FSA_AVG_plot_acrossdays(roi_ave1,roi_ave2,roi_ave3)
 % FSA_Motif_Plot.m
 
 % Plots songs, depending on the extraction order (roughly, motif order of when the were
