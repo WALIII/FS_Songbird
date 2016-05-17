@@ -1,5 +1,5 @@
 
-close all;
+% close all;
 clear all;
 
 
@@ -281,8 +281,20 @@ end
 
 figure();
 for i = 1:5
-    S_dat{i} = normc((S_dat{i}(2:end,:)));
- A    = S_dat{i}(:,:)';
+%     
+    %S_dat{i} = normc((S_dat{i}(2:end,:)));
+    S_dat3{i} = normc((S_dat{i}(1:end,:)));
+    for ii = 1:size(S_dat{1}(:,:),2)
+        if max(S_dat{i}(:,ii))> 20
+            S_dat2{i}(:,ii) = S_dat3{1}(:,ii);
+        else
+         S_dat2{i}(:,ii) = zeros(1,size(S_dat{1}(:,:),1));
+        end
+    end
+
+    
+        
+ A    = S_dat2{i}(:,:)';
   if i ==1;  
 [maxA, Ind] = max(A, [], 2);
 [dummy, index] = sort(Ind);
@@ -307,7 +319,18 @@ set(h,'Visible','on');
 
 figure();
 for i = 1:5
-    S_dat{i} = normc((S_dat{i}(2:end,:)));
+    
+        U_dat3{i} = normc((U_dat{i}(1:end,:)));
+    for ii = 1:size(U_dat{1}(:,:),2)
+        if max(U_dat{i}(:,ii))> 20
+            U_dat2{i}(:,ii) = U_dat3{1}(:,ii);
+        else
+         U_dat2{i}(:,ii) = zeros(1,size(U_dat{1}(:,:),1));
+        end
+    end
+    
+    
+
  A  = U_dat{i}(:,:)';
   if i ==1;  
 [maxA, Ind] = max(A, [], 2);
@@ -318,6 +341,48 @@ subplot(1,5,i)
 imagesc(B);
 set(gca,'YTick',[1:size(index)])
 set(gca,'YTickLabel',index)
+
+
+end
+
+colormap(hot);
+
+set(gcf,'NextPlot','add');
+axes;
+h = title('Unstable Cells');
+set(gca,'Visible','off');
+set(h,'Visible','on');
+
+% All Cells
+clear U_dat3; clear U_dat3; clear U_dat2;
+U_dat = data;
+
+figure();
+for i = 1:5
+    
+U_dat{i} = normc((U_dat{i}(1:end,:)));
+    for ii = 1:size(U_dat{1}(:,:),2)
+        if max(U_dat{i}(:,ii))> .39
+            U_dat2{i}(:,ii) = U_dat{1}(:,ii);
+        else
+         U_dat2{i}(:,ii) = zeros(1,size(U_dat{1}(:,:),1));
+        end
+    end
+        % U_dat2{i} = normc((U_dat2{i}(1:end,:)));
+    
+
+ A  = U_dat2{i}(:,:)';
+  if i ==3;  
+[maxA, Ind] = max(A, [], 2);
+[dummy, index] = sort(Ind);
+  else end;
+B  = A(index, :);
+subplot(1,5,i)
+imagesc(B);
+set(gca,'YTick',[1:size(index)])
+set(gca,'YTickLabel',index)
+
+
 end
 
 colormap(hot);

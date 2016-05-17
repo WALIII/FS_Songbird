@@ -1,6 +1,6 @@
 function mov = FSA_Format_Mov(mov_data, smooth)
 % Format Video data for analysis pipeline
-% 
+%
 
 
 cuttoff = 60;
@@ -21,17 +21,19 @@ end
 % Check data integrity
 TERM_LOOP = 0;
 for i=1:(length(mov))
-      if mean(mean(mov))< cutoff;
+  mov_A = mov(:,:,i)
+      if mean(mean(mov_A))< cutoff;
         dispword = strcat(' WARNING:  Bad frame(s) detected on frame: ',num2str(i));
         disp(dispword);
         TERM_LOOP = 1;
+        mov(:,:,i) = []; % Eliminate the bad frame...
         break
       end
 end
 
 % Termoinate if data integrity is comprimised
-if TERM_LOOP ==1;
-    disp(' skipping to nex mov file...')
-    mov= [];
-    continue
-end
+% if TERM_LOOP ==1;
+%     disp(' skipping to nex mov file...')
+%     mov= [];
+%     continue
+% end
