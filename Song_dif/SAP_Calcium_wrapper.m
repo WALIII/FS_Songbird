@@ -1,6 +1,8 @@
 
 % Wrapper for Ca imaging...
 
+function SAP_Calcium_wrapper(A);
+
 
 for i = 1:5
 [DAT] = SAP_Calcium(A,i)
