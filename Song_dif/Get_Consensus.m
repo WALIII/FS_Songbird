@@ -1,5 +1,6 @@
 
 % Get_Consensus
+function [consensus2] = Get_Consensus(A)
 
 for DAY = 1:5;
 
