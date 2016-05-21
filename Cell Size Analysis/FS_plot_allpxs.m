@@ -5,17 +5,20 @@ function [im1_rgb norm_max_proj] = FS_plot_allpxs(MOV_DATA,varargin)
 % for i = 1:size(MOV_DATA,2)
 % 		mov_data(:,:,i) = double(rgb2gray(MOV_DATA(i).cdata(:,:,:,:)));
 % end
+
 try
-for i = 1:size(MOV_DATA,2)
+for i = 1:size(MOV_DATA,2);
 		mov_data(:,:,i) = double((MOV_DATA(i).cdata(:,:,:,:)));
 end
+MOV_DATA	= mov_data;
 catch
     mov_data = MOV_DATA;
+    
 end
 
-	clear MOV_DATA;
+	%clear MOV_DATA;
 
- MOV_DATA	= mov_data(:,:,7:end-10);
+ %MOV_DATA	= mov_data(:,:,7:end-10);
 
 
 nparams=length(varargin);
@@ -25,10 +28,9 @@ filt_alpha=30; % gauss filter alpha
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
 per=0; % baseline percentile (0 for min)
-fs=24.414e3;
 bgcolor=[ .75 .75 .75 ]; % rgb values for axis background
 time_select=0;
-sono_cmap=colormap('hot');
+
 
 if mod(nparams,2)>0
 	error('Parameters must be specified as parameter/value pairs');
@@ -75,10 +77,9 @@ disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline
 
 baseline=repmat(prctile(MOV_DATA,per,3),[1 1 frames]);
 
-dff=((MOV_DATA-baseline)./(baseline+80)).*100;
+dff=((MOV_DATA-baseline)./(baseline)).*100;
 
 % take the center of mass across dim 3 (time) for each point in space
-
 disp('Computing the center of mass...');
 
 com_idx=zeros(1,1,frames);
@@ -118,63 +119,13 @@ norm_dff=norm_dff./(clims(2)-clims(1)); % normalize to [0,1]
 idx_img=round(norm_dff.*size(cmap,1));
 im1_rgb=ind2rgb(idx_img,cmap);
 %
-% [s,f,t]=fb_pretty_sonogram(filtfilt(b,a,double(MIC_DATA)),fs,'n',2048,'overlap',2040,'nfft',4096,'low',1,'zeropad',0);
  cbar_idxs=linspace(0,size(cmap,1),1e3);
 
 
 % Single Use Plotting
  imwrite(im1_rgb,'Filename.png','Alpha',norm_max_proj);
  I = imread('Filename.png', 'BackgroundColor',[0 0 0]);
- imwrite(I, 'NewFilename.jpg')
+figure();  imshow(I);
+ imwrite(I, 'NewFilename.jpg');
 
 
-% PLOTTING:
-
-%
-% subplot(7,1,4:6);
-% % imagesc(t,f,s);axis xy;ylim([0 9e3]);
-% set(gca,'TickDir','out');box off;
-% colormap(sono_cmap);freezeColors;
-%
-% subplot(7,1,7);
-% imagesc(cbar_idxs);axis off;
-% colormap(cmap);freezeColors;
-%
-% figure();
-%
-% subplot(9,1,1:2);
-% % imagesc(t,f,s);axis xy;ylim([0 9e3]);
-%  set(gca,'TickDir','out');box off;
-% colormap(sono_cmap);freezeColors;
-%
-% subplot(9,1,3);
-% imagesc(cbar_idxs);axis off;
-% colormap(cmap);freezeColors;
-%
-% subplot(9,1,4:9);
-% h=image(im1_rgb);
-% set(h,'AlphaData',norm_max_proj);
-% set(gca,'color',bgcolor,'tickdir','out');
-% set(gcf,'renderer','opengl','InvertHardCopy','off');
-%
-% figure();
-% image(im1_rgb);
-% colormap(cmap);freezeColors;
-%
-% figure();
-% h=image(im1_rgb);
-% set(h,'AlphaData',norm_max_proj);
-% set(gca,'color',bgcolor,'tickdir','out');
-% set(gcf,'renderer','opengl','InvertHardCopy','off');
-%
-%
-
-%
-% figure();
-% subplot(1,3,1);
-% imagesc(max(MOV_DATA,[],3));
-% subplot(1,3,2)
-% imagesc(std(dff,[],3));
-% subplot(1,3,3)
-% imagesc(norm_max_proj);
-% create sonogram image with legend

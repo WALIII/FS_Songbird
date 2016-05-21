@@ -2,7 +2,7 @@
 
 
 for i = 1:5;
-[BB1 BB2 BB3 BB4 BB5] = FSA2_Get_Mean_Scores(consensus{i},A{i});
+[BB1 BB2 BB3 BB4 BB5] = FSA2_Get_Mean_Scores(consensus2{i},A2{i});
 Avg_Ca_xcorr_agg{i} = BB1;
 sim_score_agg{i} = BB2;
 CA_Xcorr{i} = BB3;

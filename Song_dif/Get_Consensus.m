@@ -1,6 +1,6 @@
 
 % Get_Consensus
-function [consensus2] = Get_Consensus(A)
+function [consensus,F,T] = Get_Consensus(A)
 
 for DAY = 1:5;
 
@@ -18,10 +18,13 @@ for DAY = 1:5;
 	end
 
 	Gconsensus{DAY}=consensus;
+    T{DAY} = t;
+    F{DAY} = f;
 clear consensus;
 end
 
 consensus = Gconsensus;
+
     
 
 

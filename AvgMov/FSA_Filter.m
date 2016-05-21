@@ -1,8 +1,10 @@
 function [MOV_DAT_F] = FSA_Filter(mov_dat,radius)
 
-    
-AVG_DAT = mov_dat;
-for i = 1:3
+
+
+
+AVG_DAT{1} = mov_dat;
+for i = 1
 % for d = 1:size(AVG_DAT{i},3)
 %     data = AVG_DAT{1}(:,:,d);
 %     tiledImage(:,:,d) = [data, flipdim(data,1), data; flipdim(data,2), data, flipdim(data,2); data,flipdim(data,1), data];
