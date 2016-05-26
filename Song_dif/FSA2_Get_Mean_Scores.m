@@ -3,8 +3,9 @@
 
 function [Avg_Ca_xcorr, sim_score, Ca_Xcorr, sim_score_point,Ca_Xcorr_point] = FSA2_Get_Mean_Scores(consensus,data)
 
+% Use for inscopix birds. Wrapper is 'Plot_SDI_Comparison'
 
-% Use
+
 
 maxlag_samps=round(30*.02);
 
