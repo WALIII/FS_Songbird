@@ -1,5 +1,5 @@
 function [im1_rgb norm_max_proj] = FS_plot_allpxs(MOV_DATA,varargin)
-%fb_plot_allpxs uses the center of mass (df/f here) (COM) across time to define
+%FS_plot_allpxs uses the center of mass (df/f here) (COM) across time to define
 
 
 % for i = 1:size(MOV_DATA,2)
