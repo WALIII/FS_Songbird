@@ -1,6 +1,7 @@
 
 function FS2_AVGmov_Plot(ROI_dat,MOV)
 % Extract data from avg movies ( designed for LW76, for the NN paper)
+% Add ROI_dat, wich is a cell array of ROI masks.
 
 
 

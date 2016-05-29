@@ -1,5 +1,13 @@
 
 
+% Make histogram of songbird data, with transparent histogram. 
+% Edited 05.29.2016
+% WAL3
+
+
+
+
+
 
 
 figure(); 

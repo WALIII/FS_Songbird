@@ -1,6 +1,7 @@
 function FS2_AVGMOV_Display(roi_ave);
+% FUnction- plot 
 
-figure(); for ii = 1:80; for i = 1:5; plot(roi_ave.raw_dat{ii,i}+ii*2); IMDAT{i}(:,ii) =roi_ave.raw_dat{ii,i}; hold on; end; end;
+figure(); for ii = 1:81; for i = 1:5; plot(roi_ave.raw_dat{ii,i}+ii*2); IMDAT{i}(:,ii) =roi_ave.raw_dat{ii,i}; hold on; end; end;
 
 for i = 1:5;
     
@@ -203,7 +204,7 @@ U_datX(:,1:size(U_dat{i},2)) = U_dat_full(:,size(U_dat{i},2)*(i-1)+1:(size(U_dat
 [maxA, Ind] = max(A, [], 2);
 [dummy, index] = sort(Ind);
   else end;
-B  = A(index, :);
+B  = (A(index, :));
 subplot(1,5,i)
 imagesc(B);
 set(gca,'YTick',[1:size(index)])
