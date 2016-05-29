@@ -112,7 +112,7 @@ end
     for trial = 1:size(data.align_detrended,2);
      for point = 1:size(data.align_detrended{1},1)
         for cell = 1:size(data.align_detrended{1},2)
-      Ca_Xcorr_point{trial}(point,cell) = (data.align_detrended{trial}(point,cell)-(AVG_Trace(point,cell)));%./sqrt((data.align_detrended{trial}(point,cell).^2)*(AVG_Trace(point,cell)).^2);
+      Ca_Xcorr_point{trial}(point,cell) = (data.align_detrended{trial}(point,cell).*(AVG_Trace(point,cell)));%./sqrt((data.align_detrended{trial}(point,cell).^2)*(AVG_Trace(point,cell)).^2);
       %Ca_Xcorr_point{trial}(point,cell) = max(xcorr(data.align_detrended{trial}(point,cell),AVG_Trace(point,cell),maxlag_samps,'coeff'))/max(xcorr(data.align_detrended{trial}(point,cell),data.align_detrended{trial}(point,cell),maxlag_samps,'coeff'));
     %  Ca_Xcorr_point{trial}(point,cell) = sum(data.align_detrended{trial}(point,cell).*AVG_Trace(point,cell))./sqrt((data.align_detrended{trial}(point,cell).^2)*(AVG_Trace(point,cell)).^2);
 
@@ -122,13 +122,19 @@ end
 
   % Binned the song in frame sized compartments, for comparison to the ca data.
   bin_size = round(size(consensus,2)/size(data.align_detrended{1},1));
-
+  rem =  round(size(consensus,2)/size(data.align_detrended{1},1)) - size(consensus,2)/size(data.align_detrended{1},1);
+  
   for trial = 1:size(data.align_detrended,2);
     for point = 1:size(data.align_detrended{1},1)
-start = (bin_size*point)-bin_size+1;
-stop =  (bin_size*point) -1;
-  % sim_score_point{trial}(point)= sum(sum(consensus(:,start:stop,trial).*Mean_c(:,start:stop)))./sqrt(sum(sum(consensus(:,start:stop,trial).^2))*sum(sum(Mean_c(start:stop).^2)));
-  sim_score_point{trial}(point)= sum(sum(consensus(:,start:stop,trial).*Mean_c(:,start:stop)))./sqrt(sum(sum(consensus(:,start:stop,trial).^2)).*sum(sum(Mean_c(:,start:stop).^2)));
+start = round((bin_size*point)-bin_size+1- rem*point);
+stop =  round((bin_size*point) - rem*point);
+  
+% sim_score_point{trial}(point)= sum(sum(consensus(:,start:stop,trial).*Mean_c(:,start:stop)))./sqrt(sum(sum(consensus(:,start:stop,trial).^2))*sum(sum(Mean_c(start:stop).^2)));
+try
+sim_score_point{trial}(point)= sum(sum(consensus(:,start:stop,trial).*Mean_c(:,start:stop)))./sqrt(sum(sum(consensus(:,start:stop,trial).^2)).*sum(sum(Mean_c(:,start:stop).^2)));
+catch
+
+end
 %[F{trial}{point},P{trial}counter}]=zftftb_sap_score(A{DAY}.mic_data{i}(6110:end-18330)',24400);
     end
   end

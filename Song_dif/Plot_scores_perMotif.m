@@ -6,13 +6,13 @@ figure();
 
 
 counter = 1;
-for i = 1:5; 
+for i = 1:size(A,2); 
  for ii = 1:size(sim_score_agg{i},2)
      try
-     if A{i}.filename{2,ii}{1,1}(end-3:end) == '0002';
+     %if A{i}.filename{2,ii}{1,1}(end-3:end) == '0001';
     sim_score_agg2{i}(counter) = sim_score_agg{i}(ii);
     counter = counter+1;
-     end;
+     %end;
      catch
          disp('skipping file');
      end
@@ -20,7 +20,7 @@ for i = 1:5;
  end
 end
 map = lines(5);
-for i = 1:5; 
+for i = 1:size(A,2); 
     
     
     histogram(sim_score_agg2{i},20,'facecolor',map(i,:),'facealpha',.3,'edgecolor','none'); 
