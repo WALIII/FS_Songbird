@@ -1,38 +1,4 @@
-% 
-% 
-% close all;
-% 
-% A = B;
-% DAY = 2;
-% c1 = jet(size(A{2}.align_detrended{1},2));
-% c2 = jet(size(A{2}.align_detrended,2));
-% 
-% for T1 = 1:size(A{2}.align_detrended,2);
-% for trial = 1:size(A{DAY}.align_detrended,2) % trial
-% Ca{trial} = dot(zscore(A{DAY}.align_detrended{T1}(6:end-16,:)),zscore(A{DAY}.align_detrended{trial}(6:end-16,:)));
-% Son{trial} = dot(zscore(A{DAY}.mic_data{T1}(6110:end-18330)),zscore(A{DAY}.mic_data{trial}(6110:end-18330)));
-% 
-% hold on
-% for i = 1:size(A{2}.align_detrended{1},2) % Cell
-% figure(1); plot(Son{trial},Ca{trial}(:,i),'*','Color',c1(i,:));
-% hold on
-% figure(2); plot(Son{trial},Ca{trial}(:,i),'*','Color',c2(trial,:));
-% hold on
-% end
-% MCa{trial} = mean(Ca{trial});
-% VCa{trial} = std(Ca{trial});
-% 
-% figure(3); plot(Son{trial},MCa{trial},'*','Color',c2(trial,:)); 
-% hold on;
-% figure(4); plot(VCa{trial},MCa{trial},'*','Color',c2(trial,:)); 
-% hold on;
-% title('avg Cell dot product vs song')
-% end
-% clear ca;
-% clear Son;
-% clear MCa;
-% end
-
+% Plot pretty PCA plots
 %%%%%
 
 close all
@@ -61,6 +27,7 @@ hold on;
 
 
 
+%format for plotting 
 z1 = score(:,1);
 x1 = score(:,2);
 y1 = score(:,4);
