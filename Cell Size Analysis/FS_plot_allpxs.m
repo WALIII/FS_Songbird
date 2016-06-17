@@ -8,12 +8,12 @@ function [im1_rgb norm_max_proj] = FS_plot_allpxs(MOV_DATA,varargin)
 
 try
 for i = 1:size(MOV_DATA,2);
-		mov_data(:,:,i) = double((MOV_DATA(i).cdata(:,:,:,:)));
+		mov_data(:,:,i) = double(rgb2gray((MOV_DATA(i).cdata(:,:,:,:))));
 end
 MOV_DATA	= mov_data;
 catch
     mov_data = MOV_DATA;
-    
+
 end
 
 	%clear MOV_DATA;
@@ -23,13 +23,15 @@ end
 
 nparams=length(varargin);
 
-filt_rad=20; % gauss filter radius
-filt_alpha=30; % gauss filter alpha
+filt_rad=10; % gauss filter radius
+filt_alpha=20; % gauss filter alpha
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
 per=0; % baseline percentile (0 for min)
 bgcolor=[ .75 .75 .75 ]; % rgb values for axis background
 time_select=0;
+startT = 1;
+stopT = size(mov_data,2);
 
 
 if mod(nparams,2)>0
@@ -60,6 +62,10 @@ for i=1:2:nparams
 			time_select=varargin{i+1};
 		case 'sono_cmap'
 			sono_cmap=varargin{i+1};
+        case 'start'
+			startT=varargin{i+1};
+        case 'stop'
+			stopT=varargin{i+1};
 	end
 end
 
@@ -77,7 +83,7 @@ disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline
 
 baseline=repmat(prctile(MOV_DATA,per,3),[1 1 frames]);
 
-dff=((MOV_DATA-baseline)./(baseline)).*100;
+dff=((MOV_DATA.^4-baseline)./(baseline)).*100;
 
 % take the center of mass across dim 3 (time) for each point in space
 disp('Computing the center of mass...');
@@ -91,7 +97,7 @@ end
 com_idx=repmat(com_idx,[rows columns 1]);
 
 mass=sum(dff,3);
-com_dff=sum((dff.*com_idx),3)./mass+10;
+com_dff=sum((dff.*com_idx),3)./mass;
 
 max_proj=std(dff,[],3);
 
@@ -127,5 +133,3 @@ im1_rgb=ind2rgb(idx_img,cmap);
  I = imread('Filename.png', 'BackgroundColor',[0 0 0]);
 figure();  imshow(I);
  imwrite(I, 'NewFilename.jpg');
-
-

@@ -15,8 +15,8 @@ for  iii = 1:length(mov_listing)
 
   [path,file,ext]=fileparts(filenames{iii});
 
-load(fullfile(pwd,mov_listing{iii}),'mov_data_aligned');
-[im1_rgb norm_max_proj] = FS_plot_allpxs(mov_data_aligned);
+load(fullfile(pwd,mov_listing{iii}),'mov_data');
+[im1_rgb norm_max_proj] = FS_plot_allpxs(mov_data,'start',5,'stop',35);
 
   imwrite(im1_rgb,'allpix/TempImage.png','Alpha',norm_max_proj);
   I = imread('allpix/TempImage.png', 'BackgroundColor',[0 0 0]);

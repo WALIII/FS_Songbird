@@ -77,9 +77,9 @@ dff2=imfilter(dff2,h); %Clean up
 
 I = find(diff(vid_times) > .04);
 if size(I,1)<1
-     
-AggMov_data(:,:,:,counter) = dff2(:,:,1:50);
-
+     if size(dff2,3)>48;
+AggMov_data(:,:,:,counter) = dff2(:,:,1:48);
+     end;
 counter = counter+1;
 end
 

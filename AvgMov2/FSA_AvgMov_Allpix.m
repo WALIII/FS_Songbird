@@ -12,7 +12,7 @@ MOV_DATA = double(MOV_DATA(:,:,:)); % MOV_DATA(:,:,15:35))
 
 [rows,columns,frames]=size(MOV_DATA);
 
-dff = MOV_DATA; 
+dff = MOV_DATA;
 
 disp('Computing the center of mass...');
 
@@ -25,7 +25,7 @@ end
 com_idx=repmat(com_idx,[rows columns 1]);
 
 mass=sum(dff,3);
-com_dff=sum((dff.*com_idx),3)./mass;
+com_dff=sum((dff.*com_idx),3)./mass+10;
 
 max_proj=std(dff,[],3);
 
