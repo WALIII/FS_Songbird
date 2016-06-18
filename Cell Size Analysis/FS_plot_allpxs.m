@@ -23,8 +23,8 @@ end
 
 nparams=length(varargin);
 
-filt_rad=10; % gauss filter radius
-filt_alpha=20; % gauss filter alpha
+filt_rad=15; % gauss filter radius
+filt_alpha=15; % gauss filter alpha
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
 per=0; % baseline percentile (0 for min)
@@ -83,7 +83,7 @@ disp(['Converting to df/f using the ' num2str(per) ' percentile for the baseline
 
 baseline=repmat(prctile(MOV_DATA,per,3),[1 1 frames]);
 
-dff=((MOV_DATA.^4-baseline)./(baseline)).*100;
+dff=((MOV_DATA-baseline)./(baseline)).*100;
 
 % take the center of mass across dim 3 (time) for each point in space
 disp('Computing the center of mass...');
@@ -99,7 +99,7 @@ com_idx=repmat(com_idx,[rows columns 1]);
 mass=sum(dff,3);
 com_dff=sum((dff.*com_idx),3)./mass;
 
-max_proj=std(dff,[],3);
+max_proj=max(dff,[],3);
 
 %
 
