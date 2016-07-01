@@ -26,7 +26,7 @@ trialno = {'0001','0002','0003'}
 colores = {'r','g','b'}
 
 
-cell2 = 1:20;
+cell2 = 1:26;
 
  counter2 = 1;
  clear HoldingV;

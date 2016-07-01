@@ -1,13 +1,17 @@
 
-close all
-figure(); 
-trialno = '0001'
 
-cell2 = [1 2 3 4 6 7 8 9 10 12 16 17 20 24 27 29 30 34 41 ]
+figure(1);
+
+hold on;
+
+
+trialno = '0003'
+
+cell2 = 1:28;
 
  counter2 = 1;
  clear HoldingV;
-for trial = 1:300
+for trial = 1:80
 
    clear Y; 
 S = roi_ave.filename{1,trial};
@@ -24,7 +28,13 @@ for cell = cell2 %[2 4 5 8 12 14  16 17 22 23  25 26] ;
 
 
     subplot(1,2,1);
- plot(roi_ave.raw_time{cell,trial}(:,3:end),(zscore(roi_ave.raw_dat{cell,trial}(:,3:end)))+counter*5,'b'); 
+   
+    
+    
+    
+    Pdat = tsmovavg(roi_ave.raw_dat{cell,trial}(:,:)','s',3,1);
+    Pdat = Pdat';
+ plot(roi_ave.raw_time{cell,trial}(:,3:end),zscore(Pdat(3:end))+counter*5); 
  hold on;  
 
   counter = counter+1;
@@ -57,7 +67,7 @@ hold off;
 
 
 counter = 1;
-color = '-b';
+color = '-r';
 for  cell = cell2  %[2 4 5 8 12 14  16 17 22 23  25 26] ;
     clear Meen;
 for  j = 1:size(HoldingV,2)
