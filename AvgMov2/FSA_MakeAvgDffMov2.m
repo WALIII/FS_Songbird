@@ -3,7 +3,7 @@ function AVG_MOV = FSA_MakeAvgDffMov()
 
 
 
-filt_rad=3; % gauss filter radius
+filt_rad=1; % gauss filter radius
 filt_alpha=3; % gauss filter alpha
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
