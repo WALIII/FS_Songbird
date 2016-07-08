@@ -4,7 +4,7 @@ function [consensus F T] = FS_Get_Consensus(A)
 % For freedomScope Birds.
 
 
-for DAY = 1:5;
+for DAY = 1:size(A,2);
 
 	[consensus f t]=acontour(A{DAY}.analogIO_dat{1},48000);
 	% compute sdi, relevant quantities, store
