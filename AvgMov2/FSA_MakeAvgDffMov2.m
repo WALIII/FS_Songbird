@@ -30,7 +30,7 @@ for i=1:(length(mov_data)-3)
    mov_data3 = single(rgb2gray(mov_data(i).cdata));
    mov_data4 = single(rgb2gray(mov_data(i+1).cdata));
    mov_data5 = single(rgb2gray(mov_data(i+2).cdata));
-      if mean(mean(mov_data4))< 60;
+      if mean(mean(mov_data4))< 30;
         dispword = strcat(' WARNING:  Bad frame(s) detected on frame: ',num2str(i));
         disp(dispword);
         TERM_LOOP = 1;
