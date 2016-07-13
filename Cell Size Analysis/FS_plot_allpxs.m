@@ -6,24 +6,17 @@ function [im1_rgb norm_max_proj] = FS_plot_allpxs(MOV_DATA,varargin)
 % 		mov_data(:,:,i) = double(rgb2gray(MOV_DATA(i).cdata(:,:,:,:)));
 % end
 
-try
-for i = 1:size(MOV_DATA,2);
-		mov_data(:,:,i) = double(rgb2gray((MOV_DATA(i).cdata(:,:,:,:))));
-end
-MOV_DATA	= mov_data;
-catch
-    mov_data = MOV_DATA;
+[MOV_DATA2, n] = FS_Format(MOV_DATA,1);
+clear MOV_DATA;
 
-end
-
-	%clear MOV_DATA;
+MOV_DATA = double(MOV_DATA2);
 
  %MOV_DATA	= mov_data(:,:,7:end-10);
 
 
 nparams=length(varargin);
 
-filt_rad=25; % gauss filter radius
+filt_rad=20; % gauss filter radius
 filt_alpha=30; % gauss filter alpha
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
@@ -31,7 +24,7 @@ per=5; % baseline percentile (0 for min)
 bgcolor=[ .75 .75 .75 ]; % rgb values for axis background
 time_select=0;
 startT = 1;
-stopT = size(mov_data,2);
+stopT = size(MOV_DATA,3);
 
 
 if mod(nparams,2)>0
@@ -100,7 +93,7 @@ com_idx=repmat(com_idx,[rows columns 1]);
 mass=sum(dff,3);
 com_dff=sum((dff.*com_idx),3)./mass;
 
-max_proj=max(dff,[],3);
+max_proj=std(dff,[],3);
 
 %
 
@@ -132,5 +125,6 @@ im1_rgb=ind2rgb(idx_img,cmap);
 % Single Use Plotting
  imwrite(im1_rgb,'Filename.png','Alpha',norm_max_proj);
  I = imread('Filename.png', 'BackgroundColor',[0 0 0]);
-figure();  imshow(I);
+ close(1);
+figure(1);  imshow(I);
  imwrite(I, 'NewFilename.jpg');
