@@ -1,10 +1,10 @@
 function AVG_MOV = FSA_MakeAvgDffMov()
-% Make average Dff movie
+% Make average Dff movie from aligned videos.
 
 
 
-filt_rad=1; % gauss filter radius
-filt_alpha=3; % gauss filter alpha
+filt_rad=15; % gauss filter radius
+filt_alpha=20; % gauss filter alpha
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
 per=0; % baseline percentile (0 for min)
@@ -24,28 +24,9 @@ for  iii = 1:length(mov_listing)
 DispWrd = strcat('moving to: ', file);
 disp(DispWrd);
 
+
 % Extract video data:
-TERM_LOOP = 0;
-for i=1:(length(mov_data)-3)
-   mov_data3 = single(rgb2gray(mov_data(i).cdata));
-   mov_data4 = single(rgb2gray(mov_data(i+1).cdata));
-   mov_data5 = single(rgb2gray(mov_data(i+2).cdata));
-      if mean(mean(mov_data4))< 30;
-        dispword = strcat(' WARNING:  Bad frame(s) detected on frame: ',num2str(i));
-        disp(dispword);
-        TERM_LOOP = 1;
-        break
-      end
-   mov_data2(:,:,i) = uint8((mov_data3 + mov_data4 +mov_data5)/3);
-
-end
-
-
-
-if TERM_LOOP ==1;
-    disp(' skipping to nex mov file...')
-    continue
-end
+[mov_data2, n] = FS_Format(mov_data,1);
 
 
  test = single(mov_data2(:,:,1:end));
@@ -53,7 +34,7 @@ end
 
 
 
-  
+
 %%%=============[ FILTER Data ]==============%%%
 
 
