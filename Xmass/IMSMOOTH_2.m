@@ -31,11 +31,11 @@ end
 for i = 1:size(im_data,2)
 test = tiledImage(:,:,i);
 test=imresize(double(test),1);
-
-h=fspecial('disk',70);
-bground=imfilter(test,h);
-% bground=smooth3(bground,[1 1 5]);
-test=test./(bground+10);
+% 
+% h=fspecial('disk',70);
+% bground=imfilter(test,h);
+% % bground=smooth3(bground,[1 1 5]);
+% test=test./(bground+10);
 
 ToTdata2(:,:,i) = double(test);
 TempDat = test;
@@ -73,8 +73,8 @@ clear A1
 LinKat = cat(1,AV{1},AV{2},AV{3}); % concat each indexed pixel value
 
 
-H = prctile(LinKat,90);
-L = prctile(LinKat,20);
+H = prctile(LinKat,95);
+L = prctile(LinKat,05);
 
 clim=[ double(L) double(H)];
 
