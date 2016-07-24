@@ -3,7 +3,7 @@ function FSA_sortIntoFolder
 
 
 
-  mov_listing=dir(fullfile(pwd,'*.jpg')); % Get all .mat file names
+  mov_listing=dir(fullfile(pwd,'*.gif')); % Get all .mat file names
   mov_listing={mov_listing(:).name};
   filenames=mov_listing;
 Here = pwd;
