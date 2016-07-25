@@ -1,4 +1,4 @@
-function FS_Syllable_Grab(BirdID)
+function FS_Syllable_Grab()
 % FS_Syllable_Grab will work though s single day's data, and aggregate all
 % The song and non-song data, as well as relevant paramaters for Ben's syllable
 % detector. Run in 'extraction' for FreedomScope Bir's analysis pipeline
@@ -7,7 +7,10 @@ function FS_Syllable_Grab(BirdID)
 % WAL3
 
 
-
+%Get Bird ID
+G = pwd;
+k = strfind(G,'/');
+BirdID = G(k(5)+1:k(6)-1);
 
 
 % Detector Paramaters
@@ -50,9 +53,15 @@ S_data = mic_data;
 % Get non-song audio data
 cd ../
 
+counter = 1;
 for i = 1:size(G,2)
 load(mov_listing{i},'audio')
-NS_data(:,i) = audio.data(10:size(S_data,1)+9);
+for ii = 1:floor(size(audio.data,1)/size(S_data,1));
+NS_data(:,counter) = audio.data(size(S_data,1)*(ii-1)+10:size(S_data,1)*(ii)+9);
+
+
+counter = counter+1;
+end
 end
 
 cd(here)
@@ -68,6 +77,6 @@ cd(here)
   Params.SamlingRate = 48000;
 
 % Save Data.
-strcat('Syllable_Detector_Data','_',BIRDID)
-  save(strcat('Syllable_Detector_Data','_',BIRDID,DATE),'Data');
-  save('Detection_Paramaters','Params')
+strcat('Syllable_Detector_Data','_',BirdID)
+  save(strcat('Syllable_Detector_Data','_',BirdID,'_',DATE),'Data');
+  save(strcat('Detection_Paramaters','_',BirdID,'_',DATE),'Params')
