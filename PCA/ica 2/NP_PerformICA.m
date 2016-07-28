@@ -14,7 +14,7 @@ function [ica_sig, mixing, separating, height, width] = NP_PerformICA(frames, va
 % parameters
 resize_factor = 4;
 eig_components = 100;
-ica_components = 25;
+ica_components = 5;
 
 % load custom parameters
 nparams=length(varargin);
@@ -57,4 +57,3 @@ data = reshape(video_gs, [], size(video_gs, 3));
 [ica_sig, mixing, separating] = fastica(data, 'lastEig', eig_components, 'numOfIC', ica_components);
 
 end
-

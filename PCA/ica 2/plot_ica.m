@@ -5,10 +5,10 @@ function plot_ica(ica_sig, mixing, height, width, rows, cols)
 
 % default sizing
 if ~exist('rows', 'var') || isempty(rows)
-    rows = 3;
+    rows = 2;
 end
 if ~exist('cols', 'var') || isempty(cols)
-    cols = 3;
+    cols = 2;
 end
 
 % subplot indices

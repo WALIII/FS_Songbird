@@ -12,6 +12,8 @@ G = pwd;
 k = strfind(G,'/');
 BirdID = G(k(5)+1:k(6)-1);
 
+disp(strcat('Aggregating Syllable Training Data for ~',BirdID));
+
 
 % Detector Paramaters
 Params.ntrain = 1000;                                   % How many songs from the data set will be used as training data (if available)?
@@ -44,7 +46,7 @@ DATE =  filenames{1}(1:10);
   G = find(cellfun(@isempty,sorted_syllable)); % TO DO: what about periods of silence in song trials?
 
 for i = 1: size(G,2);
-  mov_listing{i} = filenames{G(i)}
+  mov_listing{i} = filenames{G(i)};
 end
 
 % Get Song_Data

@@ -20,12 +20,12 @@ nparams=length(varargin);
 filt_rad=20; % gauss filter radius
 filt_alpha=30; % gauss filter alpha
 lims=4; % contrast prctile limits (i.e. clipping limits lims 1-lims)
-cmap= colormap(jet);%  cubehelix(200,[0.9,-1,7,1]));
+cmap= colormap(cool);%  cubehelix(200,[0.9,-1,7,1]));
 per=3; % baseline percentile (0 for min)
 bgcolor=[ .75 .75 .75 ]; % rgb values for axis background
 time_select=0;
-startT = 1;
-stopT = size(MOV_DATA,3);
+% startT = 1;
+% stopT = size(MOV_DATA,3);
 
 
 if mod(nparams,2)>0
@@ -63,8 +63,7 @@ for i=1:2:nparams
 	end
 end
 
-
-
+MOV_DATA = MOV_DATA(:,:,startT:stopT);
 
 [rows,columns,frames]=size(MOV_DATA);
 
@@ -109,8 +108,15 @@ norm_max_proj=norm_max_proj./(clims(2)-clims(1));
 
 % map to [0,1] for ind2rgb
 
+% Relative scaling between [0,1]: 
 clims(1)=min(com_dff(:));
 clims(2)=max(com_dff(:));
+
+% Scale between [0,1] for the length of the video
+% clims(1) = 1;
+% clims(2) = frames;
+
+
 
 norm_dff=min(com_dff,clims(2)); % clip to max
 norm_dff=max(norm_dff-clims(1),0); % clip min
