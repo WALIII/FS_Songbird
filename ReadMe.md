@@ -20,16 +20,17 @@ This will parse the .mov files into matlab-readable .m files, and will created a
 3. Run:
 
 ```
->> FS_Dff('type','BackgroundSubtract')  
+>> FS_DFF_STD_Image
 ```
 Alternatively, you can use:
+
 ```
->> FS_Dff('type','Dff',0)% will take the 0th percentile as background
+>> FS_BatchDff
 ```
 
 ...which will make a downsampled, background subtracted video as well as a maximum projection image for each file in your directory. In addition, it will make a Average-maximum projection image called Dff_composite, of all the recordings from the session combined.
 
-At this point, The calcium imaging videos exist in the cell video.frames.cdata contained inside each .m file in the mat folder. It is stored as a 4D matrix (H,W,C,T) and can be plugged into any analysis pipeline- although it may need to be formatted differently depending on your application. Next Step is to do template alignments.
+At this point, The calcium imaging videos exist as a 4D matrix (H,W,C,T) and can be plugged into any analysis pipeline- although it may need to be formatted differently depending on your application. Next Step is to do template alignments.
 
 
 ```
@@ -44,9 +45,21 @@ eventually, you will cluster the data.
 
 Change Directories to >mat--> extraction--> mov
 
+Files in this repo are structured as follows:
+
+```
+fs: sampling frequency of the mic, 48000 KHz
+im_resize: resizing of the data, propagated to the next stage
+mic_data: Microphone data, and time stamps
+motif: Which motif # in a bout was this extracted
+mov_data: Video data, in the format: Height * Width * Color * Frame
+movie_fs: Video Sampling frequency
+video_times: Timestamps of the video
+```
+
+
 
 ### MAX/STD PROJECTIONS
-you can run FS_Dff.m again ( as in step 3) or, to just make max and std projections,
 
 ```
 >> FS_DFF_STD_Image;
@@ -56,12 +69,22 @@ you can run FS_Dff.m again ( as in step 3) or, to just make max and std projecti
 
 Sometimes it is useful to color max projection images by the time of firing. This representation uses the center of mass of each pixel in time, to determine its color.
 
+TO make these for each video:
+
+```
+FSA_batch_allpix
+```
+
+For an Individual file,
+
+```
+FS_plot_allpix(mov_data)
+```
+
+
 ![ScreenShot](IM/All_pix.jpg)
 
 figure: Example allpix image.
-
-
-### Average video
 
 
 ### Manual ROI extraction
