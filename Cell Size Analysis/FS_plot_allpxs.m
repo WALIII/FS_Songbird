@@ -9,7 +9,7 @@ function [im1_rgb norm_max_proj] = FS_plot_allpxs(MOV_DATA,varargin)
 [MOV_DATA2, n] = FS_Format(MOV_DATA,1);
 clear MOV_DATA;
 
-MOV_DATA = double(MOV_DATA2);
+MOV_DATA = abs(double((MOV_DATA2)));
 
  %MOV_DATA	= mov_data(:,:,7:end-10);
 
@@ -20,12 +20,12 @@ nparams=length(varargin);
 filt_rad=20; % gauss filter radius
 filt_alpha=30; % gauss filter alpha
 lims=4; % contrast prctile limits (i.e. clipping limits lims 1-lims)
-cmap= colormap(cool);%  cubehelix(200,[0.9,-1,7,1]));
+cmap= colormap(jet);%  cubehelix(200,[0.9,-1,7,1]));
 per=3; % baseline percentile (0 for min)
 bgcolor=[ .75 .75 .75 ]; % rgb values for axis background
 time_select=0;
-% startT = 1;
-% stopT = size(MOV_DATA,3);
+startT = 1;
+stopT = size(MOV_DATA,3);
 
 
 if mod(nparams,2)>0
@@ -93,7 +93,7 @@ com_idx=repmat(com_idx,[rows columns 1]);
 mass=sum(dff,3);
 com_dff=sum((dff.*com_idx),3)./mass;
 
-max_proj=std(dff,[],3);
+max_proj=max(dff,[],3);
 
 %
 
