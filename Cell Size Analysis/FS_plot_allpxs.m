@@ -93,7 +93,7 @@ com_idx=repmat(com_idx,[rows columns 1]);
 mass=sum(dff,3);
 com_dff=sum((dff.*com_idx),3)./mass;
 
-max_proj=max(dff,[],3);
+max_proj=std(dff,[],3);
 
 %
 
