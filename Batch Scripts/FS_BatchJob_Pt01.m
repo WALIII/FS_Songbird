@@ -58,7 +58,7 @@ end
 
 
 try
-FS_BatchJob_TemplateMatch(TEMPLATE)
+FS_TemplateMatch(TEMPLATE)
 catch
   disp('could not match template')
 end

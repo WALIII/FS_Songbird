@@ -58,8 +58,8 @@ try
 FS_AV_Parse;
 catch
   disp('could not perform function')
-  send_text_message('617-529-0762','Verizon', ...
-         'ERROR','Could not perform function')
+%   send_text_message('617-529-0762','Verizon', ...
+%          'ERROR','Could not perform function')
 end
 disp('Processing for day X moving to the next day')
 cd(START_DIR_ROOT)
