@@ -13,9 +13,9 @@ for  iii = 1:length(mov_listing)
    cd(Here);
   [path,file,ext]=fileparts(filenames{iii});
   
-  load(fullfile(pwd,mov_listing{iii}),'audio');
+  load(fullfile(pwd,mov_listing{iii}),'mic_data');
   audio.filename = file;
-  AudioData{iii} = audio;
+  AudioData{iii} = mic_data(:,1);
   
  
 end

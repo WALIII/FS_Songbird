@@ -16,7 +16,7 @@ for  iii = 1:length(mov_listing)
   cd('../')
 
 
- 
+
  Fname = strcat(file,'.mat');
  copyfile(Fname,Here);
 end

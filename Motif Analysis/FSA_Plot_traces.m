@@ -7,11 +7,11 @@ hold on;
 
 trialno = '0003'
 
-cell2 = 1:28;
+cell2 = 1:5;
 
  counter2 = 1;
  clear HoldingV;
-for trial = 1:80
+for trial = 1:50
 
    clear Y; 
 S = roi_ave.filename{1,trial};
