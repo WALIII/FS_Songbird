@@ -31,7 +31,7 @@ function [TRACES] = FS_Trace_Parse(maxNeurons)
   [nblanks formatstring]=fb_progressbar(100);
   fprintf(1,['Progress:  ' blanks(nblanks)]);
 
-for i=1:length(mov_listing)
+for i=1; % base on first videp
 
       [path,file,ext]=fileparts(filenames{i});
 
@@ -69,8 +69,8 @@ options = CNMFSetParms(...
 % fast initialization of spatial components using greedyROI and HALS
 if i ==1; [A,C,b,f,~] = initialize_components(Y,K,tau,options); end;  % initialize end;
 
-% display centers of found components
-% Cn =  correlation_image(Y,8); %max(Y,[],3); %std(Y,[],3); % image statistic (only for display purposes)
+%display centers of found components
+Cn =  correlation_image(Y,8); %max(Y,[],3); %std(Y,[],3); % image statistic (only for display purposes)
 
 Yr = reshape(Y,d,T);
 clear Y;
@@ -86,13 +86,17 @@ for jj=1:maxITER
     [A,C,~,~,P,S] = merge_components(Yr,A,b,C,f,P,S,options);
 end
 
-
 end
+
+
+[A_or,C_or,S_or,~] = order_ROIs(A,C,S,P); % order components
+K_m = size(C_or,1);
+
 
 
 disp('Extracting Traces');
 for i=1:length(mov_listing)
-
+clear Y; clear Yr;
       [path,file,ext]=fileparts(filenames{i});
 
   	fprintf(1,formatstring,round((i/length(mov_listing))*100));
@@ -110,11 +114,35 @@ d = d1*d2;                                          % total number of pixels
 width = d1;
 height = d2;
 
-Yr = Y;
 
+[P,Y] = preprocess_data(Y,p);
+
+% % fast initialization of spatial components using greedyROI and HALS
+% [A,C,b,f,~] = initialize_components(Y,K,tau,options);  % initialize
+% 
+% % display centers of found components
+% Cn =  correlation_image(Y,8); %max(Y,[],3); %std(Y,[],3); % image statistic (only for display purposes)
+
+clear C; clear b; clear f;
+[~,C,b,f,~] = initialize_components(Y,K,tau,options);
+
+Yr = reshape(Y,d,T);
+clear Y;
+Y = Yr;
+for jj=1:maxITER
+    % update spatial components
+     [A,b,C] = update_spatial_components(Y,C,f,A,P,options);
+% 
+%     % update temporal components
+     [C,f,P,S] = update_temporal_components(Y,A,b,C,f,P,options);
+
+    % merge found components
+    [A,C,~,~,P,S] = merge_components(Yr,A,b,C,f,P,S,options);
+end
 
 [A_or,C_or,S_or,~] = order_ROIs(A,C,S,P); % order components
 K_m = size(C_or,1);
+
 [C_df,~,~] = extract_DF_F(Yr,[A_or,b],[C_or;f],S_or,K_m+1); % extract DF/F values (optional)
 
 SpatMap = A_or;
