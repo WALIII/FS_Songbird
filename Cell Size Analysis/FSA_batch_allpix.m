@@ -15,10 +15,16 @@ for  iii = 1:length(mov_listing)
 
   [path,file,ext]=fileparts(filenames{iii});
 
+  try
+      load(fullfile(pwd,mov_listing{iii}),'video');
+      mov_data = video.frames;
+  catch
 load(fullfile(pwd,mov_listing{iii}),'mov_data');
+  end
 
 
-[im1_rgb norm_max_proj] = FS_plot_allpxs(mov_data,'start',5,'stop',35);
+
+[im1_rgb norm_max_proj] = FS_plot_allpxs(mov_data,'start',40,'stop',100);
 
   imwrite(im1_rgb,'allpix/TempImage.png','Alpha',norm_max_proj);
   I = imread('allpix/TempImage.png', 'BackgroundColor',[0 0 0]);
