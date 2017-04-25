@@ -4,8 +4,8 @@
 
 
 
-Llim = 0.0001;
-Hlim = 0.15;
+Llim = 0.05;
+Hlim = .30;
 
 % for i = 1:3;
 %     
@@ -14,14 +14,15 @@ Hlim = 0.15;
 % end; 
 
 
-G{1} = (mean(Lconsensus{1},3) + mean(Lconsensus2{1},3))/2;
-G{2} = (mean(Mconsensus{1},3)+ mean(Mconsensus2{1},3))/2;
+G{1} = uint8(GG1);
+G{2} = uint8(GG2);
+
 
 clear im1;
 
 im1(:,:,1)=  mat2gray(G{1});
 im1(:,:,2)=  mat2gray(G{2});
-im1(:,:,3)=  mat2gray(G{2});
+im1(:,:,3)=  mat2gray(G{1});
 
 
 % im2(:,:,1)=  mat2gray(G{2});
@@ -49,7 +50,7 @@ RGB1 = imadjust(im1,[Llim Llim Llim; Hlim Hlim Hlim],[]);
 
 figure();
 
-image(flipdim(RGB1,1)); ylim([700, 1000]);
+image((RGB1)); 
 title('baseleine to baseline')
 
 % subplot(3,1,2);
