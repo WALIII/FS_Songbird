@@ -3,8 +3,8 @@ function AVG_MOV = FSA_MakeAvgDffMov()
 
 
 
-filt_rad=15; % gauss filter radius
-filt_alpha=20; % gauss filter alpha
+filt_rad=10; % gauss filter radius
+filt_alpha=10; % gauss filter alpha
 lims=3; % contrast prctile limits (i.e. clipping limits lims 1-lims)
 cmap=colormap('jet');
 per=0; % baseline percentile (0 for min)
@@ -56,11 +56,13 @@ h=fspecial('disk',2);
 dff2=imfilter(dff2,h); %Clean up
 
 
-I = find(diff(vid_times) > .04);
+I = find(diff(vid_times) > .10);
 if size(I,1)<1
-     if size(dff2,3)>48;
-AggMov_data(:,:,:,counter) = dff2(:,:,1:48);
-     end;
+     if size(dff2,3)>40;
+AggMov_data(:,:,:,counter) = dff2(:,:,1:42);
+     else
+    disp('CATCH!');
+    end
 counter = counter+1;
 end
 

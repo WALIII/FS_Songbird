@@ -1,3 +1,6 @@
+
+Function FS_PCA(
+
 % Plot pretty PCA plots
 %%%%%
 
@@ -6,7 +9,6 @@ close all
 
 
 for i = 1:18;
-Matrix_data = (A{2}.align_detrended{i}');
 
 clear colorA
 
