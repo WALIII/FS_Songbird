@@ -2,9 +2,7 @@ function [im1_rgb norm_max_proj] = FS_plot_allpxs(MOV_DATA,varargin)
 %FS_plot_allpxs uses the center of mass (df/f here) (COM) across time to define
 
 
-% for i = 1:size(MOV_DATA,2)
-% 		mov_data(:,:,i) = double(rgb2gray(MOV_DATA(i).cdata(:,:,:,:)));
-% end
+
 
 [MOV_DATA2, n] = FS_Format(MOV_DATA,1);
 clear MOV_DATA;

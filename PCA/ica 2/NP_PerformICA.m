@@ -12,7 +12,7 @@ function [ica_sig, mixing, separating, height, width] = NP_PerformICA(frames, va
 %   algorithm, handling video resizing and unrolling.
 
 % parameters
-resize_factor = 4;
+resize_factor = 4';
 eig_components = 100;
 ica_components = 5;
 
